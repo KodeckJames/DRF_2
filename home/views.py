@@ -13,6 +13,10 @@ def index(request):
         print('You hit a GET request')
         return Response(courses)
     elif request.method == 'POST':
+        data = request.data
+        print('******')
+        print(data)
+        print('******')
         print('You hit a POST request')
         return Response(courses)
     elif request.method == 'PUT':
