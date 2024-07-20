@@ -29,7 +29,7 @@ def index(request):
     
 @api_view(['GET','POST'])
 def person(request):
-    if request.Get:
+    if request.method == 'GET':
         objs = person.objects.all()
         serializer = PeopleSerializer(objs, many = True)
         return Response(serializer.data)
