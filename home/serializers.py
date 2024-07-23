@@ -5,6 +5,7 @@ class PeopleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = '__all__'
+        depth = 1
 
     def validate(self, data):
         special_chars = "!@#$%^&*()-=+?_=,<>/"
