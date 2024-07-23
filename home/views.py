@@ -27,7 +27,7 @@ def index(request):
         print('You hit a PUT request')
         return Response(courses)
     
-@api_view(['GET','POST','PUT','PATCH'])
+@api_view(['GET','POST','PUT','PATCH','DELETE'])
 def person(request):
     if request.method == 'GET':
         objs = Person.objects.all()
@@ -49,8 +49,14 @@ def person(request):
         return Response(serializer.errors)
     elif request.method == 'PATCH':
         data = request.data
-        serializer = PeopleSerializer(data = data)
+        obj = Person.objects.get(id = data['id'])
+        serializer = PeopleSerializer(obj, data = data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+    else:
+        data = request.data 
+        obj = Person.objects.get(id = data['id'])
+        obj.delete()
+        return Response({'message':'Person deleted'})

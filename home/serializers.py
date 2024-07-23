@@ -5,3 +5,11 @@ class PeopleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
         fields = '__all__'
+
+    def validate(self, data):
+        special_chars = "!@#$%^&*()-=+?_=,<>/"
+        if any(c in special_chars for c in data['name']):
+            raise serializers.ValidationError('Name cannot contain special chars')
+        if data['age'] < 18:
+            raise serializers.validationError('Age should be grater than 18')
+        return data
